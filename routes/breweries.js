@@ -1,17 +1,20 @@
 var express = require("express");
 var router = express.Router();
-var queries = require("../queries");
+var queries = require("../utilities/queries");
 
 router.get("/", function(request, response, next) {
-    var breweries;
-    // Query for breweries here
-    response.render("breweries", {breweries: breweries});
+  queries.getBreweries()
+  .then(function(data) {
+    response.render("breweries", {breweries: data});
+  })
 });
 
 router.get("/:id/beers", function(request, response, next) {
-    var beers;
-    // Query for beers by brewery here
+  queries.getBeersByBrewery(request.params.id)
+  .then(function(beers) {
     response.render("beers", {beers: beers});
+  })
+    // Query for beers by brewery here
 });
 
 module.exports = router;
