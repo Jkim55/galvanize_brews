@@ -1,11 +1,12 @@
 var express = require("express");
 var router = express.Router();
-var queries = require("../queries");
+var queries = require("../utilities/queries");
 
 router.get("/", function(request, response, next) {
-    var beers;
-    // Query for beers here
+  queries.getBeers()
+  .then(function(beers) {
     response.render("beers", {beers: beers});
+  })
 });
 
 module.exports = router;
